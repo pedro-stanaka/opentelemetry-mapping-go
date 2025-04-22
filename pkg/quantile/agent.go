@@ -84,7 +84,8 @@ func (a *Agent) Insert(v float64, sampleRate float64) {
 
 // InsertInterpolate linearly interpolates a count from the given lower to upper bounds
 func (a *Agent) InsertInterpolate(lower float64, upper float64, count uint) {
-	keys := make([]Key, 0)
+	keys := getKeyList()
+	defer putKeyList(keys)
 	for k := agentConfig.key(lower); k <= agentConfig.key(upper); k++ {
 		keys = append(keys, k)
 	}
